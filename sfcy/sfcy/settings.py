@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'allauth',
+    'allauth.account',
 ]
 
 MIDDLEWARE = [
@@ -44,6 +46,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -75,8 +78,13 @@ WSGI_APPLICATION = 'sfcy.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'edwincamirtharaj$sfcypaw',
+        'USER': 'edwincamirtharaj',
+        'PASSWORD': 'Amir@1983',
+        'HOST': '127.0.0.1', #'HOST': 'edwincamirtharaj.mysql.pythonanywhere-services.com',
+        'PORT': '3306',
+        
     }
 }
 
@@ -128,3 +136,69 @@ MEDIA_ROOT = '/home/edwincamirtharaj/sfcy/media'
 MEDIA_URL = '/media/'
 STATIC_ROOT = '/home/edwincamirtharaj/sfcy/static'
 STATIC_URL = '/static/'
+
+# Allauth Settings
+
+AUTHENTICATION_BACKENDS = [
+    # ...
+    'allauth.account.auth_backends.AuthenticationBackend',
+    # ...
+]
+
+AUTHENTICATION_CLASSES = (
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/accounts/login/'
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = None
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_EMAIL_CONFIRMATION_SIGNUP = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_CONFIRMATION_HMAC = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_SIGNUP_PASSWORD_VERIFICATION = True
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+ACCOUNT_LOGOUT_ON_GET = False
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+
+
+
+# Email Settings
+
+    # Use the SMTP email backend
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+    # SMTP server settings
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Example: For Gmail
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = 'webappbook@gmail.com'  # Your email address
+EMAIL_HOST_PASSWORD = 'scymusdbvuhhohdt'  # Your email password or app password
+
+    # Default "from" address for emails
+DEFAULT_FROM_EMAIL = 'SF Consultancy <noreply@sfconsultancy.com>'
+
+    # Reply-to address for emails sent by your application
+    # Set to the same as DEFAULT_FROM_EMAIL or leave blank
+EMAIL_REPLY_TO = ''
+
+    # Use SSL/TLS for the connection when sending emails
+EMAIL_USE_SSL = False
+
+    # Email timeout (in seconds)
+EMAIL_TIMEOUT = None
+
+    # Subject prefix for emails sent by your application
+EMAIL_SUBJECT_PREFIX = '[MyApp]'
+
+    # Set to True to use the console backend during development
+EMAIL_BACKEND_CONSOLE = True
